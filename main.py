@@ -116,9 +116,8 @@ def main():
     print("Please enter an initial guess: ")
     x0=float(input())
     f_calc = lambdify(x, f)
-    while f_calc(x0)==0:
-        print("Please enter different initial guess: ")
-        x0 = float(input())
+    if f_calc(x0)==0: # if x0 is a root
+        x0 += 0.000000001
     Horners_Method(f, rank, x0)
 
 
