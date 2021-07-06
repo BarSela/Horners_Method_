@@ -66,7 +66,6 @@ def Horners_Method(p,n,guess):
     """
     result = []  # contain all the roots that was found
     e = 0.000001  # The required level of accuracy
-    limit=[-1000,1000]  # Setting boundaries for testing in case of not finding a root
     p_calc = lambdify(x, p)
     print('p(x):', p)
     print('Guess: ', guess)
@@ -79,7 +78,7 @@ def Horners_Method(p,n,guess):
             Q_x = div_poly(p, root)
             root=find_root(p,Q_x,root)
             print('approximation ',j,': ', root)
-            if root<limit[0] or root>limit[1] or j>100:  # if out of bound or above 100 iterations stop search roots
+            if j>100:  # if out of bound or above 100 iterations stop search roots
                 flag=False
                 print('No more roots ')
                 break
@@ -110,11 +109,25 @@ def Horners_Method(p,n,guess):
         return result
 
 
+def main():
+    x = sp.symbols('x')
+    f = x**5-8*x**4-72*x**3+382*x**2+727*x-2310 # change here if you want another function
+    rank=5
+    print("Please enter an initial guess: ")
+    x0=float(input())
+    f_calc = lambdify(x, f)
+    while f_calc(x0)==0:
+        print("Please enter different initial guess: ")
+        x0 = float(input())
+    Horners_Method(f, rank, x0)
 
+
+
+main()
 f = x**5-8*x**4-72*x**3+382*x**2+727*x-2310
 f1= 2*x**4-3*x**2+3*x-4
 f2=x**2-6*x+8
 f3=5*x**4-2*x**2+7*x-4
 f4=x**2+4*x+6
 f5=5*x**5+4*x**3-2*x
-Horners_Method(f3,4,0)
+
